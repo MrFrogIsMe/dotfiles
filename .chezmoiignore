@@ -1,1 +1,2 @@
 dot_config/tmux/plugins/**
+dot_config/nvim/lua/tmp/**

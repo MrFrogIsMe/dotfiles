@@ -1,0 +1,8 @@
+provider = "OpenMeteo"
+api_key = ""
+city = "Taipei"
+units = "metric"
+showcityname = false
+use_colors = false
+live_mode = false
+compact = false

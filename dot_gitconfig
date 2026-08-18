@@ -1,0 +1,15 @@
+[core]
+	editor = nvim
+[user]
+	email = ribk5003@gmail.com
+	name = MrFrogIsMe
+	signingkey = C22568924C36785Dbb
+[commit]
+	gpgSign = false
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[color]
+	ui = true

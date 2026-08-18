@@ -1,0 +1,291 @@
+local keyset = vim.keymap.set
+keyset('n', '<Leader>e', ':NvimTreeToggle<Cr>', { silent = true })
+
+vim.g.nvim_tree_follow = 1
+vim.g.nvim_tree_indent_markers = 1
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_root_folder_modifier = ":~"
+vim.g.nvim_tree_tab_open = 1 vim.g.nvim_tree_allow_resize = 1
+
+-- Open on enter vi
+local function open_nvim_tree(data)
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(data.file) == 1
+
+    if not directory then
+        return
+    end
+
+    -- create a new, empty buffer
+    vim.cmd.enew()
+
+    -- wipe the directory buffer
+    vim.cmd.bw(data.buf)
+
+    -- change to the directory
+    vim.cmd.cd(data.file)
+
+    -- open the tree
+    require("nvim-tree.api").tree.open()
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+local get_lua_cb = function(cb_name)
+    return string.format(":lua require'nvim-tree'.on_keypress('%s')<CR>", cb_name)
+end
+
+
+require('nvim-tree').setup({ -- BEGIN_DEFAULT_OPTS
+open_on_tab = false,
+auto_reload_on_write = true,
+disable_netrw = false,
+hijack_cursor = false,
+hijack_netrw = true,
+hijack_unnamed_buffer_when_opening = false,
+-- ignore_buffer_on_setup = false,
+-- open_on_setup = false,
+-- open_on_setup_file = false,
+sort_by = "name",
+root_dirs = {},
+prefer_startup_root = false,
+sync_root_with_cwd = false,
+reload_on_bufenter = false,
+respect_buf_cwd = false,
+on_attach = "disable",
+-- remove_keymaps = false,
+select_prompts = false,
+view = {
+    adaptive_size = false,
+    centralize_selection = false,
+    width = 25,
+    -- hide_root_folder = false,
+    side = "left",
+    preserve_window_proportions = false,
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes",
+    -- mappings = {
+    --     custom_only = false,
+    --     list = {
+    --         -- user mappings go here
+    --         ["<CR>"] = get_lua_cb("edit"),
+    --         ["o"] = get_lua_cb("edit"),
+    --         ["<2-LeftMouse>"] = get_lua_cb("edit"),
+    --         ["<2-RightMouse>"] = get_lua_cb("cd"),
+    --         ["<C-]>"] = get_lua_cb("cd"),
+    --         ["+"] = get_lua_cb("cd"),
+    --         ["<C-v>"] = get_lua_cb("vsplit"),
+    --         ["<C-x>"] = get_lua_cb("split"),
+    --         ["<C-t>"] = get_lua_cb("tabnew"),
+    --         ["<BS>"] = get_lua_cb("close_node"),
+    --         ["<S-CR>"] = get_lua_cb("close_node"),
+    --         ["<Tab>"] = get_lua_cb("preview"),
+    --         ["I"] = get_lua_cb("toggle_ignored"),
+    --         ["H"] = get_lua_cb("toggle_dotfiles"),
+    --         ["R"] = get_lua_cb("refresh"),
+    --         ["a"] = get_lua_cb("create"),
+    --         ["d"] = get_lua_cb("remove"),
+    --         ["r"] = get_lua_cb("rename"),
+    --         ["<C-r>"] = get_lua_cb("full_rename"),
+    --         ["x"] = get_lua_cb("cut"),
+    --         ["c"] = get_lua_cb("copy"),
+    --         ["p"] = get_lua_cb("paste"),
+    --         ["[c"] = get_lua_cb("prev_git_item"),
+    --         ["]c"] = get_lua_cb("next_git_item"),
+    --         ["-"] = get_lua_cb("dir_up"),
+    --         ["q"] = get_lua_cb("close")
+    --     },
+    -- },
+    float = {
+        enable = false,
+        quit_on_focus_loss = true,
+        open_win_config = {
+            relative = "editor",
+            border = "rounded",
+            width = 30,
+            height = 30,
+            row = 1,
+            col = 1,
+        },
+    },
+},
+renderer = {
+    add_trailing = false,
+    group_empty = false,
+    highlight_git = false,
+    full_name = false,
+    highlight_opened_files = "none",
+    root_folder_label = ":~:s?$?/..?",
+    indent_width = 2,
+    indent_markers = {
+        enable = false,
+        inline_arrows = true,
+        icons = {
+            corner = "└",
+            edge = "│",
+            item = "│",
+            bottom = "─",
+            none = " ",
+        },
+    },
+    icons = {
+        webdev_colors = true,
+        git_placement = "before",
+        padding = " ",
+        symlink_arrow = " ➛ ",
+        show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = true,
+        },
+        glyphs = {
+            default = "",
+            symlink = "",
+            bookmark = "",
+            folder = {
+                arrow_closed = "",
+                arrow_open = "",
+                default = "",
+                open = "",
+                empty = "",
+                empty_open = "",
+                symlink = "",
+                symlink_open = "",
+            },
+            git = {
+                unstaged = "✗",
+                staged = "✓",
+                unmerged = "",
+                renamed = "➜",
+                untracked = "★",
+                deleted = "",
+                ignored = "◌",
+            },
+        },
+    },
+    special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+    symlink_destination = true,
+},
+hijack_directories = {
+    enable = true,
+    auto_open = true,
+},
+update_focused_file = {
+    enable = false,
+    debounce_delay = 15,
+    update_root = false,
+    ignore_list = {},
+},
+-- ignore_ft_on_setup = {},
+system_open = {
+    cmd = "",
+    args = {},
+},
+diagnostics = {
+    enable = true,
+    show_on_dirs = false,
+    show_on_open_dirs = true,
+    debounce_delay = 50,
+    severity = {
+        min = vim.diagnostic.severity.HINT,
+        max = vim.diagnostic.severity.ERROR,
+    },
+    icons = {
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
+    },
+},
+filters = {
+    dotfiles = false,
+    git_clean = false,
+    no_buffer = false,
+    custom = {},
+    exclude = {},
+},
+filesystem_watchers = {
+    enable = true,
+    debounce_delay = 50,
+    ignore_dirs = {},
+},
+git = {
+    enable = true,
+    ignore = true,
+    show_on_dirs = true,
+    show_on_open_dirs = true,
+    timeout = 400,
+},
+actions = {
+    use_system_clipboard = true,
+    change_dir = {
+        enable = true,
+        global = false,
+        restrict_above_cwd = false,
+    },
+    expand_all = {
+        max_folder_discovery = 300,
+        exclude = {},
+    },
+    file_popup = {
+        open_win_config = {
+            col = 1,
+            row = 1,
+            relative = "cursor",
+            border = "shadow",
+            style = "minimal",
+        },
+    },
+    open_file = {
+        quit_on_open = false,
+        resize_window = true,
+        window_picker = {
+            enable = true,
+            picker = "default",
+            chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+            exclude = {
+                filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+                buftype = { "nofile", "terminal", "help" },
+            },
+        },
+    },
+    remove_file = {
+        close_window = true,
+    },
+},
+trash = {
+    cmd = "gio trash",
+    require_confirm = true,
+},
+live_filter = {
+    prefix = "[FILTER]: ",
+    always_show_folders = true,
+},
+tab = {
+    sync = {
+        open = false,
+        close = false,
+        ignore = {},
+    },
+},
+notify = {
+    threshold = vim.log.levels.INFO,
+},
+log = {
+    enable = false,
+    truncate = false,
+    types = {
+        all = false,
+        config = false,
+        copy_paste = false,
+        dev = false,
+        diagnostics = false,
+        git = false,
+        profile = false,
+        watcher = false,
+    },
+},
+}) -- END_DEFAULT_OPTS

@@ -1,14 +1,16 @@
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Setting PATH for Python 2.7
+# Setting PATH for Python 2.7 (macOS only)
 # The original version is saved in .zprofile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-export PATH
+if [ -d "/Library/Frameworks/Python.framework/Versions/2.7/bin" ]; then
+  PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+  export PATH
+fi
 
 # Hermes Agent — ensure ~/.local/bin is on PATH
 export PATH="$HOME/.local/bin:$PATH"
 
 
 # Added by Antigravity CLI installer
-export PATH="/Users/pengqize/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

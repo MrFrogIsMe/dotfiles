@@ -60,7 +60,7 @@ dap.adapters.codelldb = {
   port = "${port}",
   executable = {
     -- CHANGE THIS to your path!
-    command = '/Users/pengqize/Documents/codelldb/extension/adapter/codelldb',
+    command = vim.fn.expand('~/Documents/codelldb/extension/adapter/codelldb'),
     args = {"--port", "${port}"},
   }
 }

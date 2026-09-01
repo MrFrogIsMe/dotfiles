@@ -8,9 +8,4 @@ if [ -d "/Library/Frameworks/Python.framework/Versions/2.7/bin" ]; then
   export PATH
 fi
 
-# Hermes Agent — ensure ~/.local/bin is on PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-
-# Added by Antigravity CLI installer
-export PATH="$HOME/.local/bin:$PATH"
+# ~/.local/bin already on PATH via ~/.zshenv (Hermes Agent / Antigravity installer both wanted this)

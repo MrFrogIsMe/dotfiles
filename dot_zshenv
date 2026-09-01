@@ -1,2 +1,54 @@
-# uv
 export PATH="$HOME/.local/bin:$PATH"
+
+# XDG settings
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_RUNTIME_DIR="$HOME/.run"
+
+mkdir -p "$XDG_STATE_HOME"/zsh "$XDG_CACHE_HOME"/zsh "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR"/npm "$XDG_CACHE_HOME"/npm
+chmod 700 "$XDG_RUNTIME_DIR"
+
+# zsh path
+export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+SHELL_SESSIONS_DISABLE=1
+
+# omz path
+export ZSH="$XDG_DATA_HOME"/oh-my-zsh
+
+# npm path
+export NPM_CONFIG_INIT_MODULE="$XDG_CONFIG_HOME"/npm/config/npm-init.js
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME"/npm
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR"/npm
+
+# codex path
+export CODEX_HOME="$XDG_CONFIG_HOME"/codex
+
+# pi path
+export PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME"/pi/agent
+
+# claude code path
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME"/claude
+
+# rustup path
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+
+# boto path
+export BOTO_CONFIG="${XDG_CONFIG_HOME}/gcloud/boto"
+
+# docker path
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+
+# go
+export GOPATH="$XDG_DATA_HOME"/go
+
+# gnupg
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+
+# tldr (c client)
+export TLDR_CACHE_DIR="$XDG_CACHE_HOME"/tldr
+
+# keras
+export KERAS_HOME="$XDG_STATE_HOME"/keras

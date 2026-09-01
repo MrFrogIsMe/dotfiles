@@ -1,14 +1,15 @@
 #!/bin/bash
 set -eu
 
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+ZSH="${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-zsh"
+ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
 
 clone_if_missing() {
   local dest="$1" repo="$2"
   [ -d "$dest" ] || git clone --depth=1 "$repo" "$dest"
 }
 
-if [ -d "$HOME/.oh-my-zsh" ]; then
+if [ -d "$ZSH" ]; then
   clone_if_missing "$ZSH_CUSTOM/plugins/zsh-autosuggestions" https://github.com/zsh-users/zsh-autosuggestions
   clone_if_missing "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" https://github.com/zsh-users/zsh-syntax-highlighting
   clone_if_missing "$ZSH_CUSTOM/plugins/you-should-use" https://github.com/MichaelAquilina/zsh-you-should-use

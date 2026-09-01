@@ -1,0 +1,5 @@
+{
+  "lastChangelogVersion": "0.79.0",
+  "defaultProvider": "ollama",
+  "defaultModel": "gemma4:e2b"
+}

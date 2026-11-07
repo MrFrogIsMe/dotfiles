@@ -1,4 +1,10 @@
 return {
+  -- Themes
+  -- "morhetz/gruvbox",
+  -- "joshdick/onedark.vim",
+  -- "olimorris/onedarkpro.nvim",
+  "xiyaowong/transparent.nvim",
+
   {
     "catppuccin/nvim",
     lazy = true,
@@ -60,6 +66,5 @@ return {
       -- colorscheme = "catppuccin",
       colorscheme = "tokyonight",
     },
-  }
+  },
 }
-
